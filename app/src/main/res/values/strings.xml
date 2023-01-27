@@ -12,5 +12,11 @@
     <string name="signIn">Sign In</string>
     <string name="logout">Logout</string>
     <string name="viewMode">Switch view mode</string>
+    <string name="registerSuccessfully">Register Successfully</string>
+    <string name="errorRegister">Email address is already registered</string>
+    <string name="UserCreatedSuccessfully">User Created Successfully</string>
+    <string name="addNote">New note</string>
+    <string name="title_activity_note_map_page">NoteMapPage</string>
+
 
 </resources>
