@@ -60,6 +60,14 @@ public class LoginPage extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser!= null){
+            startActivity(new Intent(this,NoteListPage.class));
+        }
+    }
 
     //login try -> if user exist in firebase
     private void loginUser(String email, String password) {
@@ -71,7 +79,6 @@ public class LoginPage extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), NoteListPage.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("email", email);
                     startActivity(intent);
                 }
                 //if the user does not exist in firebase
