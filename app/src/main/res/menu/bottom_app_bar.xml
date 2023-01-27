@@ -10,13 +10,6 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/addNote"
-        android:icon="@drawable/ic_add"
-        android:title="@string/addNote"
-        android:contentDescription="@string/addNote"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
         android:title="@string/logout"

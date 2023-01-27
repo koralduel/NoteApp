@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.noteapp.databinding.ActivityNoteListPageBinding;
-import com.example.noteapp.databinding.ActivityRegisterPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,27 +42,25 @@ public class NoteListPage extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
 
-
-        binding.topAppBar.setOnMenuItemClickListener(menuItem -> {
-            if(menuItem.getTitle().equals(getString(R.string.viewMode))){
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            if(item.getTitle().equals(getString(R.string.viewMode))){
                 Intent intent = new Intent(this,NoteMapPage.class);
                 startActivity(intent);
             }
-            if(menuItem.getTitle().equals(getString(R.string.addNote))){
-                Intent intent = new Intent(this,CreateNote.class);
-                startActivity(intent);
-            }
-            if(menuItem.getTitle().equals(getString(R.string.logout))){
+            else if(item.getTitle().equals(getString(R.string.logout))){
                 firebaseAuth.signOut();
                 startActivity(new Intent(this, LoginPage.class));
             }
             return true;
+
+        });
+
+        binding.fab.setOnClickListener(view ->{
+            Intent intent = new Intent(getApplicationContext(),CreateNote.class);
+            startActivity(intent);
         });
 
 
-
-
-
-        binding.topAppBar.setTitle("Welcome,"+ currentUser.getDisplayName());
+        binding.TvWelcome.setText("Welcome,"+ currentUser.getDisplayName());
     }
 }
