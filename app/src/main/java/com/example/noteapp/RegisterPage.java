@@ -112,11 +112,21 @@ public class RegisterPage extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), R.string.UserCreatedSuccessfully, Toast.LENGTH_LONG).show();
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseUser user = mAuth.getCurrentUser();
                     String userID = user.getUid();
                     // after created in firebaseAuth -> save user in realTime database under users->userID
                     databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
                     User currentUser = new User(userID,email,name);
+
+                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(name)
+                            .build();
+                    user.updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                        }
+                    });
 
                     databaseReference.setValue(currentUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -125,7 +135,6 @@ public class RegisterPage extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), R.string.registerSuccessfully, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), NoteListPage.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.putExtra("email",email);
                                 startActivity(intent);
                             }
                         }
