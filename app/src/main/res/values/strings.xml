@@ -17,6 +17,14 @@
     <string name="UserCreatedSuccessfully">User Created Successfully</string>
     <string name="addNote">New note</string>
     <string name="title_activity_note_map_page">NoteMapPage</string>
+    <string name="newNote">New Note</string>
+    <string name="creationDate">Creation Date:</string>
+    <string name="noteTitle">Title:</string>
+    <string name="enterNoteTitle">Enter note title</string>
+    <string name="body">Body:</string>
+    <string name="enter_body">Enter your body</string>
+    <string name="save">Save</string>
+
 
 
 </resources>

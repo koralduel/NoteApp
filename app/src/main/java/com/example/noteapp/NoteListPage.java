@@ -27,9 +27,8 @@ public class NoteListPage extends AppCompatActivity {
 
     //FirebaseUser user;
     FirebaseAuth firebaseAuth;
-    Intent intent;
     DatabaseReference reference;
-    User currentUser;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +37,11 @@ public class NoteListPage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
-        //intent from registration or login page-> get logged userID
-        intent= getIntent();
-        String email=intent.getStringExtra("email");
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         reference = FirebaseDatabase.getInstance().getReference("Users");
+
+
 
         binding.topAppBar.setOnMenuItemClickListener(menuItem -> {
             if(menuItem.getTitle().equals(getString(R.string.viewMode))){
@@ -64,6 +63,6 @@ public class NoteListPage extends AppCompatActivity {
 
 
 
-        //binding.topAppBar.setTitle("Welcome,"+ currentUser.getName());
+        binding.topAppBar.setTitle("Welcome,"+ currentUser.getDisplayName());
     }
 }
