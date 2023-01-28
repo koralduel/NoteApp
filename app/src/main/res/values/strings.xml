@@ -35,6 +35,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="errorSave">Error in saving Note</string>
     <string name="delete">Delete</string>
-
+    <string name="localDb">localDB</string>
 
 </resources>

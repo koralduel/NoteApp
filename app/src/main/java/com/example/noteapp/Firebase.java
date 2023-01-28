@@ -28,13 +28,35 @@ public class Firebase {
 
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private NoteDao dao;
+    private NotesRepository.NoteListData noteListData;
     //private NotesRepository.noteListData noteListData;
     private DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("Notes").child(user.getUid());
 
-    public Firebase() { }
+    public Firebase(NoteDao dao,NotesRepository.NoteListData noteListData)
+    {
+        dataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Note> notes = new ArrayList<>();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    Note note = dataSnapshot.getValue(Note.class);
+                    notes.add(note);
+                }
+                noteListData.setValue(notes);
+                new Thread(()->{
+                    dao.clear();
+                    dao.insertList(notes);
+                }).start();
 
-    public List<Note> getAllNotes(){
-       return null;
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Error","Failed to change data in dao");
+            }
+        });
+        this.dao=dao;
+        this.noteListData=noteListData;
     }
 
     public void add(Note note) {

@@ -1,11 +1,13 @@
 package com.example.noteapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.noteapp.databinding.ActivityNoteListPageBinding;
@@ -17,7 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class NoteListPage extends AppCompatActivity implements ClickInterface{
@@ -33,6 +38,7 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
     Adapter_Note adapter;
     List<Note> notes;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +51,25 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
         reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
         viewModel= new ViewModelProvider(this).get(NotesViewModel.class);
 
-        notes = viewModel.getAllNotes();
+        //
+        notes = new ArrayList<>();
+
+
+        viewModel.get().observe(this,p->{
+            notes.clear();
+            notes.addAll(p);
+            adapter.setPosts(p);
+           // binding.RVNotesList.setRefreshing(false);
+        });
+
         adapter = new Adapter_Note(notes,this);
         binding.RVNotesList.setLayoutManager(new LinearLayoutManager(this));
         binding.RVNotesList.setAdapter(adapter);
 
 
-
         binding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
             if(item.getTitle().equals(getString(R.string.viewMode))){
-                Intent intent = new Intent(this,NoteMapPage.class);
+                Intent intent = new Intent(this,MapNotePage.class);
                 startActivity(intent);
             }
             else if(item.getTitle().equals(getString(R.string.logout))){
@@ -66,6 +81,7 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
         });
 
         binding.fab.setOnClickListener(view ->{
+            //Intent intent = new Intent(getApplicationContext(),CreateNote.class);
             Intent intent = new Intent(getApplicationContext(),CreateNote.class);
             startActivity(intent);
         });

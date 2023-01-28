@@ -136,7 +136,18 @@ public class CreateNote extends AppCompatActivity implements LocationListener {
             Geocoder geocoder = new Geocoder(CreateNote.this, Locale.getDefault());
             Location currentLocation =  locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             List<Address> addresses = geocoder.getFromLocation(currentLocation.getLatitude(),currentLocation.getLongitude(),1);
-            txtLocation = addresses.get(0).getAddressLine(0);
+            String add = addresses.get(0).getAddressLine(0);
+
+            List<Address> addresses2 = geocoder.getFromLocationName(add, 1);
+            if(addresses.size() > 0) {
+                Address address = addresses.get(0);
+                double latitude = address.getLatitude();
+                double longitude = address.getLongitude();
+                txtLocation = "latitude:" + String.valueOf(latitude) +","+ "longitude:" + String.valueOf(longitude);
+            }
+
+
+
 
         }catch (Exception e){
             e.printStackTrace();

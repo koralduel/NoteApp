@@ -62,6 +62,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.transition:transition:1.2.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.arch.core:core-runtime:2.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.espresso:espresso-idling-resource:3.4.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.room:room-common:2.4.2" level="project" />
     <orderEntry type="library" name="Gradle: androidx.collection:collection-ktx:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.collection:collection:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-common:2.1.0" level="project" />
@@ -76,12 +77,20 @@
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.6.21" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-annotations:16.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.j256.ormlite:ormlite-android:5.0" level="project" />
+    <orderEntry type="library" name="Gradle: mil.nga.geopackage:geopackage-core:2.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.j256.ormlite:ormlite-core:5.0" level="project" />
+    <orderEntry type="library" name="Gradle: mil.nga:wkb:1.0.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.osgeo:proj4j:0.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: ar.com.hjg:pngj:2.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: mil.nga:tiff:2.0.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.databinding:viewbinding:7.1.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.navigation:navigation-ui:2.5.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.material:material:1.6.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.4.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-database:20.0.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-storage:20.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.room:room-runtime:2.4.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-auth:21.0.6@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-maps:18.0.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.viewpager2:viewpager2:1.0.0@aar" level="project" />
@@ -129,6 +138,8 @@
     <orderEntry type="library" name="Gradle: androidx.versionedparcelable:versionedparcelable:1.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.localbroadcastmanager:localbroadcastmanager:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-components:17.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.sqlite:sqlite-framework:2.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.sqlite:sqlite:2.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.5.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata:2.0.0@aar" level="project" />
@@ -140,5 +151,8 @@
     <orderEntry type="library" name="Gradle: androidx.print:print:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation-experimental:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout:2.1.4@aar" level="project" />
+    <orderEntry type="library" name="Gradle: org.osmdroid:osmdroid-geopackage:6.1.5@aar" level="project" />
+    <orderEntry type="library" name="Gradle: org.osmdroid:osmdroid-android:6.1.5@aar" level="project" />
+    <orderEntry type="library" name="Gradle: mil.nga.geopackage:geopackage-android:2.0.1@aar" level="project" />
   </component>
 </module>

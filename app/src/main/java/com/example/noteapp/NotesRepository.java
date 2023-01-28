@@ -10,34 +10,46 @@ import java.util.List;
 
 public class NotesRepository {
 
+    private NoteDao dao;
     private Firebase fireBase;
+    private NoteListData noteListData;
     private static  NotesRepository notesRepository = new NotesRepository();
    // private noteListData noteListData;
 
 
     private NotesRepository() {
+        LocalDataBase db = LocalDataBase.getInstance();
+        dao = db.noteDao();
         //noteListData = new noteListData();
-        fireBase = new Firebase();
+        noteListData = new NoteListData();
+        fireBase = new Firebase(dao,noteListData);
     }
 
-    /*public class noteListData extends MutableLiveData<List<Note>> {
+    public class NoteListData extends MutableLiveData<List<Note>> {
 
-        public noteListData() {
+        public NoteListData() {
             super();
             setValue(new LinkedList<>());
         }
+        @Override
+        protected void onActive() {
+            super.onActive();
 
+            new Thread(() -> {
+                noteListData.postValue(dao.get());
+            }).start();
+        }
 
-    }*/
-
-    //buid a firebase class and execute these functions
-    public List<Note> getAllNotes(){
-        return fireBase.getAllNotes();
     }
 
-   /* public LiveData<List<Note>> getAll() {
-        return noteListData;
+    //buid a firebase class and execute these functions
+   /* public List<Note> getAllNotes(){
+        return fireBase.getAllNotes();
     }*/
+
+    public LiveData<List<Note>> getAll() {
+        return noteListData;
+    }
 
     public void add (final Note note) {
         fireBase.add(note);

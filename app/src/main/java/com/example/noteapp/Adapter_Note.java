@@ -1,17 +1,23 @@
 package com.example.noteapp;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Adapter_Note extends RecyclerView.Adapter<Adapter_Note.ViewHolder>{
@@ -42,8 +48,23 @@ public class Adapter_Note extends RecyclerView.Adapter<Adapter_Note.ViewHolder>{
         String creationDate = notes.get(i).getCreationDate();
         holder.creationDate.setText(creationDate);
 
-        String body = notes.get(i).getBody().substring(0,30);
+        String body = notes.get(i).getBody();
         holder.body.setText(body);
+    }
+
+    public void setPosts(List<Note> s){
+        Collections.sort(s, new Comparator<Note>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public int compare(Note o1, Note o2) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate post1=LocalDate.parse(o1.getCreationDate(),formatter);
+                LocalDate post2=LocalDate.parse(o2.getCreationDate(),formatter);
+                return post1.isAfter(post2) ? -1:1;
+            }
+        });
+        notes = s;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -63,9 +84,9 @@ public class Adapter_Note extends RecyclerView.Adapter<Adapter_Note.ViewHolder>{
 
         public ViewHolder(@NonNull View viewItem, ClickInterface clickInterface) {
             super(viewItem);
-            title = viewItem.findViewById(R.id.ET_titleValue);
-            creationDate = viewItem.findViewById(R.id.Tv_creation_date_value);
-            body = viewItem.findViewById(R.id.ET_bodyValue);
+            title = viewItem.findViewById(R.id.Tv_titleItem);
+            creationDate = viewItem.findViewById(R.id.Tv_dateItem);
+            body = viewItem.findViewById(R.id.Tv_bodyItem);
 
             viewItem.setOnClickListener(v -> {
                 if (clickInterface != null) {

@@ -1,15 +1,27 @@
 package com.example.noteapp;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
+@Entity
 public class Note implements Serializable {
 
-    String creationDate;
-    String title;
-    String body;
+    @NonNull
+    @PrimaryKey(autoGenerate = false)
     String uid;
+    @ColumnInfo
+    String creationDate;
+    @ColumnInfo
+    String title;
+    @ColumnInfo
+    String body;
+    @ColumnInfo
     String location;
 
     public Note() { }
