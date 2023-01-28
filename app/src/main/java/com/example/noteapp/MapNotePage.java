@@ -1,6 +1,7 @@
 package com.example.noteapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 
@@ -23,6 +24,9 @@ import java.util.List;
 
 public class MapNotePage extends AppCompatActivity {
     MapView mapView;
+    List<Note> notes;
+    NotesViewModel viewModel;
+
     private ActivityMapNotePageBinding binding;
 
     @Override
@@ -39,12 +43,22 @@ public class MapNotePage extends AppCompatActivity {
         Configuration.getInstance().load(getApplicationContext(),
                 getSharedPreferences("notes app", Context.MODE_PRIVATE));
 
+        /*
+        viewModel= new ViewModelProvider(this).get(NotesViewModel.class);
+        //get all user notes form db*/
 
-        //get all user notes form db
-        List<Note> notes = new ArrayList<>();
         List<Marker> markers = new ArrayList<>();
 
-        notes.add(new Note("12-16-22", "koko", "koko", "1234", "latitude:37.422065599999996,longitude:-122.08408969999998"));
+
+
+/*
+        viewModel.get().observe(this,p->{
+            notes.clear();
+            notes.addAll(p);
+            // binding.RVNotesList.setRefreshing(false);
+        });*/
+
+        //notes.add(new Note("12-16-22", "koko", "koko", "1234", "latitude:37.422065599999996,longitude:-122.08408969999998"));
 
         //pins all user notes on the map
         for (Note note : notes) {
@@ -75,13 +89,21 @@ public class MapNotePage extends AppCompatActivity {
             });
         }
 
-
-        Marker firstMarker = markers.get(0);
-        GeoPoint firstMarkerPos = firstMarker.getPosition();
-
         IMapController mapController = mapView.getController();
         mapController.setZoom(3.5);
-        mapController.setCenter(firstMarkerPos);
+
+        if(notes.size()==0){
+            Marker marker = new Marker(mapView);
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        }else{
+            Marker firstMarker = markers.get(0);
+            GeoPoint firstMarkerPos = firstMarker.getPosition();
+            mapController.setCenter(firstMarkerPos);
+        }
+
+
+
+
 
     }
 

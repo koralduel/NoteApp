@@ -51,9 +51,7 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
         reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
         viewModel= new ViewModelProvider(this).get(NotesViewModel.class);
 
-        //
         notes = new ArrayList<>();
-
 
         viewModel.get().observe(this,p->{
             notes.clear();
@@ -81,7 +79,6 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
         });
 
         binding.fab.setOnClickListener(view ->{
-            //Intent intent = new Intent(getApplicationContext(),CreateNote.class);
             Intent intent = new Intent(getApplicationContext(),CreateNote.class);
             startActivity(intent);
         });
