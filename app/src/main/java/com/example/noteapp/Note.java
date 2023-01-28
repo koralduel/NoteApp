@@ -1,9 +1,10 @@
 package com.example.noteapp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-public class Note {
+public class Note implements Serializable {
 
     String creationDate;
     String title;
