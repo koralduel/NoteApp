@@ -30,35 +30,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/LL_Top_NoteList"
+        android:layout_above="@id/LL_bottomPage"
         android:layout_marginTop="50dp">
 
-        <GridView
-            android:id="@+id/photoGrid"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RV_notesList"
             android:layout_width="match_parent"
-            android:layout_height="452dp"
-            android:layout_marginTop="20dp"
-            android:horizontalSpacing="4dp"
-            android:numColumns="3"
-            android:padding="5dp"
-            android:verticalSpacing="4dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
     </LinearLayout>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+<LinearLayout
+    android:id="@+id/LL_bottomPage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/gridLayout_Notes"
-    android:layout_above="@id/LL_bottomNav">
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/CL_addButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/ic_add"
-        android:backgroundTint="@color/white"
-        />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_above="@id/LL_bottomNav">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            app:srcCompat="@drawable/ic_add" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <LinearLayout
         android:id="@+id/LL_bottomNav"
@@ -74,5 +80,6 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_app_bar" />
     </LinearLayout>
+</LinearLayout>
 
 </RelativeLayout>
