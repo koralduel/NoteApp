@@ -1,5 +1,6 @@
 package com.example.noteapp;
 
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -9,14 +10,15 @@ public class NotesViewModel extends ViewModel {
 
     private NotesRepository mRepository;
 
-    private LiveData<List<Note>> notes;
+    //private LiveData<List<Note>> notes;
 
     public NotesViewModel () {
         mRepository = NotesRepository.getNotesRepository();
-        notes = mRepository.getAll();
+        //notes = mRepository.getAll();
     }
+    public List<Note> getAllNotes(){return  mRepository.getAllNotes();}
 
-    public LiveData<List<Note>> get() { return notes; }
+    //public LiveData<List<Note>> get() { return notes; }
 
     public void add(Note note) { mRepository.add(note); }
 

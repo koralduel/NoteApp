@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,24 +27,14 @@ public class Firebase {
     //private FirebaseDatabase dateBase = FirebaseDatabase.getInstance();
 
 
-    private FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    //private NotesRepository.noteListData noteListData;
     private DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("Notes").child(user.getUid());
 
-    public Firebase(NotesRepository.NoteListData noteListData) {
-        dataRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Note> notes = new ArrayList<>();
-                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    Note note = dataSnapshot.getValue(Note.class);
-                    notes.add(note);
-                }
-                noteListData.setValue(notes);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+    public Firebase() { }
+
+    public List<Note> getAllNotes(){
+       return null;
     }
 
     public void add(Note note) {
@@ -59,7 +51,13 @@ public class Firebase {
     }
 
     public void updateNote(Note note){
-        //dataRef.child(note.getUid()).updateChildren(note);
+        HashMap<String, Object> newNote = new HashMap<>();
+        newNote.put("body",note.getBody());
+        newNote.put("creationDate",note.getCreationDate());
+        newNote.put("location",note.getLocation());
+        newNote.put("title",note.getTitle());
+        newNote.put("uid",note.getUid());
+        dataRef.child(note.getUid()).updateChildren(newNote);
     }
 
 

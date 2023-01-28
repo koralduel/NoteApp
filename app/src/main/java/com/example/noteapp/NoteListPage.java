@@ -1,5 +1,6 @@
 package com.example.noteapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,8 +11,11 @@ import android.os.Bundle;
 import com.example.noteapp.databinding.ActivityNoteListPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +42,14 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
         viewModel= new ViewModelProvider(this).get(NotesViewModel.class);
 
-        notes = new ArrayList<>();
-        binding.RVNotesList.setLayoutManager(new LinearLayoutManager(this));
+        notes = viewModel.getAllNotes();
         adapter = new Adapter_Note(notes,this);
+        binding.RVNotesList.setLayoutManager(new LinearLayoutManager(this));
         binding.RVNotesList.setAdapter(adapter);
+
 
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
@@ -71,8 +76,8 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
 
     @Override
     public void OnItemClick(int position) {
-        Intent intent = new Intent(this,CreateNote.class);
-        //intent.putExtra("mail",notes.get(position));
+        Intent intent = new Intent(this,ShowNote.class);
+        intent.putExtra("note",notes.get(position));
         startActivity(intent);
     }
 }

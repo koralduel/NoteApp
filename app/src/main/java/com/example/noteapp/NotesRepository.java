@@ -1,5 +1,7 @@
 package com.example.noteapp;
 
+
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,34 +11,33 @@ import java.util.List;
 public class NotesRepository {
 
     private Firebase fireBase;
-    private NoteListData noteListData;
     private static  NotesRepository notesRepository = new NotesRepository();
+   // private noteListData noteListData;
 
 
     private NotesRepository() {
-        noteListData = new NoteListData();
-        fireBase = new Firebase(noteListData);
-
+        //noteListData = new noteListData();
+        fireBase = new Firebase();
     }
 
-    public class NoteListData extends MutableLiveData<List<Note>> {
+    /*public class noteListData extends MutableLiveData<List<Note>> {
 
-        public NoteListData() {
+        public noteListData() {
             super();
             setValue(new LinkedList<>());
         }
 
 
-        @Override
-        protected void onActive() {
-            super.onActive();
-        }
-    }
+    }*/
 
     //buid a firebase class and execute these functions
-    public LiveData<List<Note>> getAll() {
-        return noteListData;
+    public List<Note> getAllNotes(){
+        return fireBase.getAllNotes();
     }
+
+   /* public LiveData<List<Note>> getAll() {
+        return noteListData;
+    }*/
 
     public void add (final Note note) {
         fireBase.add(note);
