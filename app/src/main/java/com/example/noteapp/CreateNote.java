@@ -29,6 +29,7 @@ public class CreateNote extends AppCompatActivity {
     ActivityCreateNoteBinding binding;
     DatabaseReference databaseReference;
     FirebaseAuth mAuth;
+    NotesViewModel viewModel =new NotesViewModel();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -46,8 +47,11 @@ public class CreateNote extends AppCompatActivity {
 
         binding.TvCreationDateValue.setText(creationDate);
 
-        binding.BtnSave.setOnClickListener(view->{
+        binding.backBtn.setOnClickListener(view -> {
+            finish();
+        });
 
+        binding.BtnSave.setOnClickListener(view->{
             String title = binding.ETTitleValue.getText().toString();
             String body = binding.ETBodyValue.getText().toString();
             String uid = UUID.randomUUID().toString();
@@ -55,23 +59,15 @@ public class CreateNote extends AppCompatActivity {
             Note note = new Note(creationDate,title,body,uid,location);
 
             if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(body)){
-                databaseReference = FirebaseDatabase.getInstance().getReference("Notes").child(currentUser.getUid()).child(uid);
-
-                databaseReference.setValue(note).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), R.string.successfullySaved, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), NoteListPage.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }
-                    }
-                });
-
+                viewModel.add(note);
+                Toast.makeText(getApplicationContext(), R.string.successfullySaved, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), NoteListPage.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }else {
                 Toast.makeText(getApplicationContext(), R.string.errorSave, Toast.LENGTH_LONG).show();
             }
         });
+
     }
 }
