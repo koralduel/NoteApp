@@ -48,7 +48,14 @@ public class Adapter_Note extends RecyclerView.Adapter<Adapter_Note.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return notes.size();
+        if(notes!=null){
+            return notes.size();
+        }
+        return 0;
+    }
+
+    public List<Note> getNotes(){
+        return notes;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
