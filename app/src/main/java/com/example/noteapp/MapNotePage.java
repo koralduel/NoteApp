@@ -10,11 +10,15 @@ import android.os.Bundle;
 
 
 import com.example.noteapp.databinding.ActivityMapNotePageBinding;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
@@ -23,9 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapNotePage extends AppCompatActivity {
+
     MapView mapView;
-    List<Note> notes;
-    NotesViewModel viewModel;
+    FirebaseAuth firebaseAuth;
+
 
     private ActivityMapNotePageBinding binding;
 
@@ -35,6 +40,8 @@ public class MapNotePage extends AppCompatActivity {
         binding = ActivityMapNotePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         mapView = binding.mapView;
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setBuiltInZoomControls(true);
@@ -43,22 +50,29 @@ public class MapNotePage extends AppCompatActivity {
         Configuration.getInstance().load(getApplicationContext(),
                 getSharedPreferences("notes app", Context.MODE_PRIVATE));
 
-        /*
-        viewModel= new ViewModelProvider(this).get(NotesViewModel.class);
-        //get all user notes form db*/
+        //handling bottom navigation clicks
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            if(item.getTitle().equals(getString(R.string.viewMode))){
+                Intent intent = new Intent(this,NoteListPage.class);
+                startActivity(intent);
+            }
+            else if(item.getTitle().equals(getString(R.string.logout))){
+                firebaseAuth.signOut();
+                startActivity(new Intent(this, LoginPage.class));
+            }
+            return true;
+
+        });
 
         List<Marker> markers = new ArrayList<>();
+        Marker marker = new Marker(mapView);
 
+        //get all user notes form db*/
 
+        List<Note> notes = new ArrayList<>();
+        NotesViewModel viewModel = new NotesViewModel();
+        notes.addAll(viewModel.get().getValue());
 
-/*
-        viewModel.get().observe(this,p->{
-            notes.clear();
-            notes.addAll(p);
-            // binding.RVNotesList.setRefreshing(false);
-        });*/
-
-        //notes.add(new Note("12-16-22", "koko", "koko", "1234", "latitude:37.422065599999996,longitude:-122.08408969999998"));
 
         //pins all user notes on the map
         for (Note note : notes) {
@@ -66,7 +80,7 @@ public class MapNotePage extends AppCompatActivity {
             double longitude = getlongitude(note);
             GeoPoint point = new GeoPoint(latitude, longitude);
 
-            Marker marker = new Marker(mapView);
+
             marker.setPosition(point);
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             marker.setTitle(note.getTitle());
@@ -89,8 +103,8 @@ public class MapNotePage extends AppCompatActivity {
             });
         }
 
-        IMapController mapController = mapView.getController();
-        mapController.setZoom(3.5);
+        /*IMapController mapController = mapView.getController();
+
 
         if(notes.size()==0){
             Marker marker = new Marker(mapView);
@@ -99,6 +113,15 @@ public class MapNotePage extends AppCompatActivity {
             Marker firstMarker = markers.get(0);
             GeoPoint firstMarkerPos = firstMarker.getPosition();
             mapController.setCenter(firstMarkerPos);
+            mapController.setZoom(3.5);
+        }*/
+
+        IMapController mapController = mapView.getController();
+
+        if (notes.size() > 0) {
+            mapController.setZoom(3.5);
+            mapController.setCenter(markers.get(0).getPosition());
+
         }
 
 
@@ -106,13 +129,14 @@ public class MapNotePage extends AppCompatActivity {
 
 
     }
-
+    //return only latitude value from location string in note
     public Float getlatitude(Note note){
         String[] values = note.getLocation().split(",");
         String latitude = values[0].split(":")[1];
         return Float.parseFloat(latitude);
     }
 
+    //return only longitude value from location string in note
     public Float getlongitude(Note note){
         String[] values = note.getLocation().split(",");
         String longitude = values[1].split(":")[1];

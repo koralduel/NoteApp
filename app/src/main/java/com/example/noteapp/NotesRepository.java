@@ -14,19 +14,16 @@ public class NotesRepository {
     private Firebase fireBase;
     private NoteListData noteListData;
     private static  NotesRepository notesRepository = new NotesRepository();
-   // private noteListData noteListData;
 
 
     private NotesRepository() {
         LocalDataBase db = LocalDataBase.getInstance();
         dao = db.noteDao();
-        //noteListData = new noteListData();
         noteListData = new NoteListData();
         fireBase = new Firebase(dao,noteListData);
     }
 
     public class NoteListData extends MutableLiveData<List<Note>> {
-
         public NoteListData() {
             super();
             setValue(new LinkedList<>());
@@ -42,10 +39,7 @@ public class NotesRepository {
 
     }
 
-    //buid a firebase class and execute these functions
-   /* public List<Note> getAllNotes(){
-        return fireBase.getAllNotes();
-    }*/
+
 
     public LiveData<List<Note>> getAll() {
         return noteListData;
@@ -64,4 +58,6 @@ public class NotesRepository {
     public static NotesRepository getNotesRepository() {
         return notesRepository;
     }
+
+
 }

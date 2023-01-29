@@ -9,14 +9,13 @@ import java.util.List;
 public class NotesViewModel extends ViewModel {
 
     private NotesRepository mRepository;
-
     private LiveData<List<Note>> notes;
 
     public NotesViewModel () {
         mRepository = NotesRepository.getNotesRepository();
         notes = mRepository.getAll();
     }
-    //public List<Note> getAllNotes(){return  mRepository.get();}
+
 
     public LiveData<List<Note>> get() { return notes; }
 
@@ -25,4 +24,6 @@ public class NotesViewModel extends ViewModel {
     public void delete(Note note) { mRepository.delete(note); }
 
     public void updateNote(Note note) {mRepository.updateNote(note);}
+
+
 }

@@ -37,7 +37,7 @@ public class RegisterPage extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
 
-        //check if mail is in format of email address
+        //check if mail is in format of email address->if not -> set an error
         binding.emailValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -57,7 +57,7 @@ public class RegisterPage extends AppCompatActivity {
             }
         });
 
-        //check if password is at least 6 chars
+        //check if password is at least 6 chars->if not -> set an error
         binding.passwordValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -76,6 +76,7 @@ public class RegisterPage extends AppCompatActivity {
             }
         });
 
+        //handling register button click
         binding.BtnRegister.setOnClickListener(view -> {
             String name= binding.nameValue.getText().toString();
             String email= binding.emailValue.getText().toString();
@@ -91,10 +92,12 @@ public class RegisterPage extends AppCompatActivity {
                 binding.passwordValue.requestFocus();
             }
             else {
+                //try to create user in db
                 createUser(name,email,password);
             }
         });
 
+        //handling sign in button click
         binding.btnSignIn.setOnClickListener(view ->{
             Intent intent = new Intent(getApplicationContext(),LoginPage.class);
             startActivity(intent);

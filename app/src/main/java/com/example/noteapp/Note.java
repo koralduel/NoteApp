@@ -26,6 +26,14 @@ public class Note implements Serializable {
 
     public Note() { }
 
+    public Note(Note note){
+        this.location = note.getLocation();
+        this.body = note.getBody();
+        this.uid = note.getUid();
+        this.title = note.getTitle();
+        this.creationDate = note.getCreationDate();
+    }
+
     public Note(String creationDate, String title, String body, String uid, String location) {
         this.creationDate = creationDate;
         this.title = title;

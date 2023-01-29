@@ -47,12 +47,13 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
         reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
         viewModel= new ViewModelProvider(this).get(NotesViewModel.class);
 
+
         notes = new ArrayList<>();
 
+        //get all notes from dao(get from db) -> put in notes list
         viewModel.get().observe(this,p->{
             notes.clear();
             notes.addAll(p);
@@ -60,11 +61,12 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
            // binding.RVNotesList.setRefreshing(false);
         });
 
+        //setting the recycler view
         adapter = new Adapter_Note(notes,this);
         binding.RVNotesList.setLayoutManager(new LinearLayoutManager(this));
         binding.RVNotesList.setAdapter(adapter);
 
-
+        //handling bottom navigation clicks
         binding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
             if(item.getTitle().equals(getString(R.string.viewMode))){
                 Intent intent = new Intent(this,MapNotePage.class);
@@ -78,15 +80,16 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
 
         });
 
+        // handle Floating action button click -> adding new note
         binding.fab.setOnClickListener(view ->{
             Intent intent = new Intent(getApplicationContext(),CreateNote.class);
             startActivity(intent);
         });
 
-
-        binding.TvWelcome.setText("Welcome,"+ currentUser.getDisplayName());
+        binding.TvWelcome.setText("Welcome, "+ currentUser.getDisplayName());
     }
 
+    //handling click on a specific note from recycler view
     @Override
     public void OnItemClick(int position) {
         Intent intent = new Intent(this,ShowNote.class);

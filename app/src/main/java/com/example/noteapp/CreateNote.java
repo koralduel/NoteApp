@@ -46,7 +46,6 @@ import java.util.UUID;
 public class CreateNote extends AppCompatActivity implements LocationListener {
 
     ActivityCreateNoteBinding binding;
-    DatabaseReference databaseReference;
     FirebaseAuth mAuth;
     NotesViewModel viewModel = new NotesViewModel();
     LocationManager locationManager;
@@ -63,19 +62,25 @@ public class CreateNote extends AppCompatActivity implements LocationListener {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        //get not from intent(came from showNote page)
         note = (Note) getIntent().getSerializableExtra("note");
 
+        //new note(not from showNote page)
         if (note == null) {
+
+            //date when note created
             LocalDate dateObj = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String creationDate = dateObj.format(formatter);
 
             binding.TvCreationDateValue.setText(creationDate);
 
+            //check if there are permission to get location -> if not ask
             if(ContextCompat.checkSelfPermission(CreateNote.this,Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED){
                 ActivityCompat.requestPermissions(CreateNote.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},100);
             }
+            //saving new note to db
             binding.BtnSave.setOnClickListener(view->{
                 String title = binding.ETTitleValue.getText().toString();
                 String body = binding.ETBodyValue.getText().toString();
@@ -94,12 +99,18 @@ public class CreateNote extends AppCompatActivity implements LocationListener {
                     Toast.makeText(getApplicationContext(), R.string.errorSave, Toast.LENGTH_LONG).show();
                 }
             });
-
+            //when clicking delete on new note(not save to db yet)
             binding.BtnDelete.setOnClickListener(view -> {
                 finish();
             });
         }
         else{
+            //editing note-> came from show note
+            binding.TvCreationDateValue.setText(note.getCreationDate());
+            binding.ETTitleValue.setText(note.getTitle());
+            binding.ETBodyValue.setText(note.getBody());
+
+            //when saving -> update the existing note
             binding.BtnSave.setOnClickListener(view -> {
                 String creationDate = note.getCreationDate();
                 String uid = note.getUid();
@@ -114,12 +125,17 @@ public class CreateNote extends AppCompatActivity implements LocationListener {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             });
+            //when deleting -> delete from db
             binding.BtnDelete.setOnClickListener(view ->{
                 viewModel.delete(note);
+                Toast.makeText(getApplicationContext(), R.string.successfullyDeleted, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), NoteListPage.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             });
 
         }
-
+        //back to page user been before
         binding.backBtn.setOnClickListener(view -> {
             finish();
         });
@@ -128,6 +144,7 @@ public class CreateNote extends AppCompatActivity implements LocationListener {
 
     }
 
+    //save in txtLocation the concat of latitude and longitude points of the user location
     @SuppressLint("MissingPermission")
     private void getLocation() {
         try{

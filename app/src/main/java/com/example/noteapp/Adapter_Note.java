@@ -49,7 +49,13 @@ public class Adapter_Note extends RecyclerView.Adapter<Adapter_Note.ViewHolder>{
         holder.creationDate.setText(creationDate);
 
         String body = notes.get(i).getBody();
-        holder.body.setText(body);
+        if(body.length()>20){
+            holder.body.setText(body.substring(0,20));
+        }
+        else{
+            holder.body.setText(body);
+        }
+
     }
 
     public void setPosts(List<Note> s){

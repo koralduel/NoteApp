@@ -25,13 +25,14 @@ public class ShowNote extends AppCompatActivity {
        binding.TvBodyValue.setText(note.body);
        binding.TvTitleValue.setText(note.title);
 
-
+        //handling edit button -> go to edit mode
         binding.editBtn.setOnClickListener(view->{
             Intent intent = new Intent(getApplicationContext(),CreateNote.class);
             intent.putExtra("note",note);
             startActivity(intent);
         });
 
+        //handling back button click
         binding.backBtn.setOnClickListener(view -> {
             finish();
         });

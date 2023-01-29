@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/drawable/btn_template.xml" value="0.162" />
+        <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/drawable/seperation_line.xml" value="0.155" />
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/layout/activity_create_note.xml" value="0.2" />
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/layout/activity_list_note_page.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/layout/activity_login_page.xml" value="0.25025641025641027" />
@@ -13,6 +14,7 @@
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/layout/activity_note_list_page.xml" value="0.2" />
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/layout/activity_note_map_page.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/layout/activity_register_page.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/layout/activity_show_note.xml" value="0.1453125" />
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/layout/note_item.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/koral/Desktop/NoteApp/NoteApp/app/src/main/res/menu/top_app_bar.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/Desktop/Eynav/ChatApp/NoteApp/app/src/main/res/layout/activity_create_note.xml" value="0.36666666666666664" />

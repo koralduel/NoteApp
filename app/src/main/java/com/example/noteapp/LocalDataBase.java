@@ -5,6 +5,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 
+//local db -> saving locally on user phone
 @Database(entities = {Note.class}, version = 1)
 public abstract class LocalDataBase extends RoomDatabase {
     private static LocalDataBase instance;

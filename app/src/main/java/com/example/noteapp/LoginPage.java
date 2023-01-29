@@ -49,17 +49,18 @@ public class LoginPage extends AppCompatActivity {
                 binding.passwordValue.setError("Password cannot be null");
                 binding.passwordValue.requestFocus();
             } else {
-                //if both password and email are not empty -> try to log in
+                //if both password and email are not empty -> try to login
                 loginUser(email, password);
             }
         });
-
+        //go to signup page
         binding.BtnSignUp.setOnClickListener(view ->{
             Intent intent = new Intent(getApplicationContext(),RegisterPage.class);
             startActivity(intent);
         });
     }
 
+    //check if a user is already login -> goes to noteList page
     @Override
     protected void onStart() {
         super.onStart();

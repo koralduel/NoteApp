@@ -23,16 +23,12 @@ import java.util.List;
 
 public class Firebase {
 
-    private static StorageReference storageRef;
-    //private FirebaseDatabase dateBase = FirebaseDatabase.getInstance();
-
-
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private NoteDao dao;
     private NotesRepository.NoteListData noteListData;
-    //private NotesRepository.noteListData noteListData;
     private DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("Notes").child(user.getUid());
 
+    //get all user notes from db -> put it the the dao
     public Firebase(NoteDao dao,NotesRepository.NoteListData noteListData)
     {
         dataRef.addValueEventListener(new ValueEventListener() {
@@ -59,19 +55,18 @@ public class Firebase {
         this.noteListData=noteListData;
     }
 
+    //add new note to db
     public void add(Note note) {
-        //storageRef = FirebaseStorage.getInstance().getReference();
         dataRef.child(String.valueOf(note.getUid())).setValue(note);
 
     }
 
+    //delete note from db
     public void delete(Note note){
-
         dataRef.child(note.getUid()).removeValue();
-        //storageRef=FirebaseStorage.getInstance().getReference();
-        //storageRef.child("Posts").child(post.getId()).delete();
     }
 
+    //update an existing note in db
     public void updateNote(Note note){
         HashMap<String, Object> newNote = new HashMap<>();
         newNote.put("body",note.getBody());
@@ -81,6 +76,8 @@ public class Firebase {
         newNote.put("uid",note.getUid());
         dataRef.child(note.getUid()).updateChildren(newNote);
     }
+
+
 
 
 }
