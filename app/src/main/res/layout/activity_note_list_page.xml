@@ -31,7 +31,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/LL_Top_NoteList"
         android:layout_above="@id/LL_bottomPage"
+        android:orientation="vertical"
         android:layout_marginTop="50dp">
+        <TextView
+            android:id="@+id/Tv_noNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/NoNotes"
+            android:gravity="center"
+            android:textStyle="bold"            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RV_notesList"

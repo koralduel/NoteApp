@@ -13,6 +13,7 @@ import com.example.noteapp.databinding.ActivityMapNotePageBinding;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import org.osmdroid.api.IMapController;
@@ -41,6 +42,7 @@ public class MapNotePage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         mapView = binding.mapView;
 
@@ -76,10 +78,17 @@ public class MapNotePage extends AppCompatActivity {
         NotesViewModel viewModel = new NotesViewModel();
         notes.addAll(viewModel.get().getValue());
 
+        List<Note> myNotes = new ArrayList<>();
+        for(Note n:notes){
+            if(n.getUserUid().equals(currentUser.getUid())){
+                myNotes.add(n);
+            }
+        }
 
+        
 
         //pins all user notes on the map
-        for (Note note : notes) {
+        for (Note note : myNotes) {
             double latitude = getlatitude(note);
             double longitude = getlongitude(note);
             GeoPoint point = new GeoPoint(latitude, longitude);
@@ -106,19 +115,6 @@ public class MapNotePage extends AppCompatActivity {
                 }
             });
         }
-
-        /*IMapController mapController = mapView.getController();
-
-
-        if(notes.size()==0){
-            Marker marker = new Marker(mapView);
-            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        }else{
-            Marker firstMarker = markers.get(0);
-            GeoPoint firstMarkerPos = firstMarker.getPosition();
-            mapController.setCenter(firstMarkerPos);
-            mapController.setZoom(3.5);
-        }*/
 
 
 

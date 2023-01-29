@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.noteapp.databinding.ActivityNoteListPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,7 +65,15 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
                     myNotes.add(n);
             }
             adapter.setPosts(myNotes);
-           // binding.RVNotesList.setRefreshing(false);
+            if(myNotes.size()>0){
+                binding.RVNotesList.setVisibility(View.VISIBLE);
+                binding.TvNoNotes.setVisibility(View.INVISIBLE);
+            }
+            else{
+                binding.RVNotesList.setVisibility(View.INVISIBLE);
+                binding.TvNoNotes.setVisibility(View.VISIBLE);
+            }
+            binding.TvWelcome.setText("Welcome, "+ currentUser.getDisplayName());
         });
 
 
@@ -72,6 +81,8 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
         adapter = new Adapter_Note(myNotes,this);
         binding.RVNotesList.setLayoutManager(new LinearLayoutManager(this));
         binding.RVNotesList.setAdapter(adapter);
+
+
 
         //handling bottom navigation clicks
         binding.bottomNavigation.setOnNavigationItemSelectedListener(item -> {
@@ -93,7 +104,7 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
             startActivity(intent);
         });
 
-        binding.TvWelcome.setText("Welcome, "+ currentUser.getDisplayName());
+        //binding.TvWelcome.setText("Welcome, "+ currentUser.getDisplayName());
     }
 
     //handling click on a specific note from recycler view
@@ -103,4 +114,5 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
         intent.putExtra("note",notes.get(position));
         startActivity(intent);
     }
+
 }
