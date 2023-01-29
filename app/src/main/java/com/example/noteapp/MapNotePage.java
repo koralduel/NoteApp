@@ -43,9 +43,12 @@ public class MapNotePage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         mapView = binding.mapView;
+
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setBuiltInZoomControls(true);
         mapView.setMultiTouchControls(true);
+
+        IMapController mapController = mapView.getController();
 
         Configuration.getInstance().load(getApplicationContext(),
                 getSharedPreferences("notes app", Context.MODE_PRIVATE));
@@ -65,7 +68,7 @@ public class MapNotePage extends AppCompatActivity {
         });
 
         List<Marker> markers = new ArrayList<>();
-        Marker marker = new Marker(mapView);
+
 
         //get all user notes form db*/
 
@@ -74,13 +77,14 @@ public class MapNotePage extends AppCompatActivity {
         notes.addAll(viewModel.get().getValue());
 
 
+
         //pins all user notes on the map
         for (Note note : notes) {
             double latitude = getlatitude(note);
             double longitude = getlongitude(note);
             GeoPoint point = new GeoPoint(latitude, longitude);
 
-
+            Marker marker = new Marker(mapView);
             marker.setPosition(point);
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             marker.setTitle(note.getTitle());
@@ -116,7 +120,7 @@ public class MapNotePage extends AppCompatActivity {
             mapController.setZoom(3.5);
         }*/
 
-        IMapController mapController = mapView.getController();
+
 
         if (notes.size() > 0) {
             mapController.setZoom(3.5);
