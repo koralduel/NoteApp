@@ -58,16 +58,16 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
         viewModel.get().observe(this,p->{
             notes.clear();
             notes.addAll(p);
-            adapter.setPosts(p);
+            myNotes = new ArrayList<>();
+            for (Note n: notes) {
+                if(n.getUserUid().equals(currentUser.getUid()))
+                    myNotes.add(n);
+            }
+            adapter.setPosts(myNotes);
            // binding.RVNotesList.setRefreshing(false);
         });
 
-        myNotes = new ArrayList<>();
-        for (Note n: notes) {
-            if(n.getUserUid()
-                    .equals(currentUser.getUid()))
-                myNotes.add(n);
-        }
+
         //setting the recycler view
         adapter = new Adapter_Note(myNotes,this);
         binding.RVNotesList.setLayoutManager(new LinearLayoutManager(this));

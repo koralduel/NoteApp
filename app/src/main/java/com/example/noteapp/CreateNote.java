@@ -18,6 +18,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import java.util.Random;
 import android.text.TextUtils;
 import android.widget.Magnifier;
 import android.widget.TextView;
@@ -156,12 +157,19 @@ public class CreateNote extends AppCompatActivity implements LocationListener {
             Location currentLocation =  locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             List<Address> addresses = geocoder.getFromLocation(currentLocation.getLatitude(),currentLocation.getLongitude(),1);
             String add = addresses.get(0).getAddressLine(0);
-
+            Random random = new Random();
+            double rand =random.nextDouble();
             List<Address> addresses2 = geocoder.getFromLocationName(add, 1);
+
             if(addresses.size() > 0) {
                 Address address = addresses.get(0);
                 double latitude = address.getLatitude();
                 double longitude = address.getLongitude();
+                if(rand>0.5){
+                    latitude+=rand;
+                }else{
+                    longitude+=rand;
+                }
                 txtLocation = "latitude:" + String.valueOf(latitude) +","+ "longitude:" + String.valueOf(longitude);
             }
 
