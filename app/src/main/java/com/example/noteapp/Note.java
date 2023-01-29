@@ -23,6 +23,8 @@ public class Note implements Serializable {
     String body;
     @ColumnInfo
     String location;
+    @ColumnInfo
+    String userUid;
 
     public Note() { }
 
@@ -34,12 +36,13 @@ public class Note implements Serializable {
         this.creationDate = note.getCreationDate();
     }
 
-    public Note(String creationDate, String title, String body, String uid, String location) {
+    public Note(String creationDate, String title, String body, String uid, String location,String userUid) {
         this.creationDate = creationDate;
         this.title = title;
         this.body = body;
         this.uid = uid;
         this.location = location;
+        this.userUid = userUid;
     }
 
     public String getCreationDate() {
@@ -80,5 +83,13 @@ public class Note implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getUserUid() {
+        return userUid;
+    }
+
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 }

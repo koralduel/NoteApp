@@ -64,7 +64,8 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
 
         myNotes = new ArrayList<>();
         for (Note n: notes) {
-            if(n.getUid().equals(currentUser.getUid()))
+            if(n.getUserUid()
+                    .equals(currentUser.getUid()))
                 myNotes.add(n);
         }
         //setting the recycler view
