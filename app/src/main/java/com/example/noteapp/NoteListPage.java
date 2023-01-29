@@ -37,6 +37,7 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
 
     Adapter_Note adapter;
     List<Note> notes;
+    List<Note> myNotes;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -61,8 +62,14 @@ public class NoteListPage extends AppCompatActivity implements ClickInterface{
            // binding.RVNotesList.setRefreshing(false);
         });
 
+        myNotes = new ArrayList<>();
+        for (Note n: notes) {
+            if(n.getUserUid()
+                    .equals(currentUser.getUid()))
+                myNotes.add(n);
+        }
         //setting the recycler view
-        adapter = new Adapter_Note(notes,this);
+        adapter = new Adapter_Note(myNotes,this);
         binding.RVNotesList.setLayoutManager(new LinearLayoutManager(this));
         binding.RVNotesList.setAdapter(adapter);
 

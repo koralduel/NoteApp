@@ -132,7 +132,7 @@ public class RegisterPage extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(), R.string.registerSuccessfully, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), NoteListPage.class);
+                                Intent intent = new Intent(getApplicationContext(), LoginPage.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                             }

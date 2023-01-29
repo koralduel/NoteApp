@@ -26,7 +26,7 @@ public class Firebase {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private NoteDao dao;
     private NotesRepository.NoteListData noteListData;
-    private DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("Notes").child(user.getUid());
+    private DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference("Notes");
 
     //get all user notes from db -> put it the the dao
     public Firebase(NoteDao dao,NotesRepository.NoteListData noteListData)
@@ -63,6 +63,7 @@ public class Firebase {
 
     //delete note from db
     public void delete(Note note){
+
         dataRef.child(note.getUid()).removeValue();
     }
 

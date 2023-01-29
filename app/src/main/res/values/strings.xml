@@ -35,5 +35,6 @@
     <string name="delete">Delete</string>
     <string name="localDb">localDB</string>
     <string name="successfullyDeleted">Successfully deleted</string>
+    <string name="LocalDb">LocalDb</string>
 
 </resources>

@@ -87,7 +87,8 @@ public class CreateNote extends AppCompatActivity implements LocationListener {
                 String uid = UUID.randomUUID().toString();
                 getLocation();
                 String location = txtLocation;
-                Note note = new Note(creationDate,title,body,uid,location);
+                String userUid = currentUser.getUid();
+                Note note = new Note(creationDate,title,body,uid,location,userUid);
 
                 if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(body)){
                     viewModel.add(note);
@@ -117,7 +118,8 @@ public class CreateNote extends AppCompatActivity implements LocationListener {
                 String location = note.getLocation();
                 String title = binding.ETTitleValue.getText().toString();
                 String body = binding.ETBodyValue.getText().toString();
-                Note note = new Note(creationDate,title,body,uid,location);
+                String userUid = note.getUserUid();
+                Note note = new Note(creationDate,title,body,uid,location,userUid);
 
                 viewModel.updateNote(note);
                 Toast.makeText(getApplicationContext(), R.string.successfullySaved, Toast.LENGTH_SHORT).show();

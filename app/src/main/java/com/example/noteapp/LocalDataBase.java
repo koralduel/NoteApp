@@ -16,7 +16,7 @@ public abstract class LocalDataBase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(NoteApp.context.getApplicationContext(),
                     LocalDataBase.class,
-                    NoteApp.context.getString(R.string.localDb)).build();
+                    NoteApp.context.getString(R.string.LocalDb)).build();
         }
         return instance;
     }
