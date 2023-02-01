@@ -37,5 +37,6 @@
     <string name="successfullyDeleted">Successfully deleted</string>
     <string name="LocalDb">LocalDb</string>
     <string name="NoNotes">You does`t have note, add one</string>
+    <string name="MapAlert">Pay attention, notes created without location permission will not appear on the map</string>
 
 </resources>

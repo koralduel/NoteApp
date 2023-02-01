@@ -3,10 +3,14 @@ package com.example.noteapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 
 import com.example.noteapp.databinding.ActivityMapNotePageBinding;
@@ -69,6 +73,16 @@ public class MapNotePage extends AppCompatActivity {
 
         });
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapNotePage.this);
+        builder.setMessage(R.string.MapAlert);
+        builder.setTitle("Alert !");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
         List<Marker> markers = new ArrayList<>();
 
 
@@ -89,38 +103,43 @@ public class MapNotePage extends AppCompatActivity {
 
         //pins all user notes on the map
         for (Note note : myNotes) {
-            double latitude = getlatitude(note);
-            double longitude = getlongitude(note);
-            GeoPoint point = new GeoPoint(latitude, longitude);
+            if(note.getLocation() !=null){
+                double latitude = getlatitude(note);
+                double longitude = getlongitude(note);
+                GeoPoint point = new GeoPoint(latitude, longitude);
 
-            Marker marker = new Marker(mapView);
-            marker.setPosition(point);
-            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            marker.setTitle(note.getTitle());
-            marker.setSnippet(note.getBody());
+                Marker marker = new Marker(mapView);
+                marker.setPosition(point);
+                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                marker.setTitle(note.getTitle());
+                marker.setSnippet(note.getBody());
 
-            markers.add(marker);
+                markers.add(marker);
 
-            mapView.getOverlays().add(marker);
+                mapView.getOverlays().add(marker);
 
-            //when Clicking on a note - goes to show note page
-            marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker, MapView mapView) {
-                    // Open the note in a new activity or fragment
-                    Intent intent = new Intent(MapNotePage.this, ShowNote.class);
-                    intent.putExtra("note", note);
-                    startActivity(intent);
-                    return true;
-                }
-            });
+                //when Clicking on a note - goes to show note page
+                marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker, MapView mapView) {
+                        // Open the note in a new activity or fragment
+                        Intent intent = new Intent(MapNotePage.this, ShowNote.class);
+                        intent.putExtra("note", note);
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+            }
+
         }
 
 
-
-        if (notes.size() > 0) {
-            mapController.setZoom(3.5);
-            mapController.setCenter(markers.get(0).getPosition());
+        mapController.setZoom(3.5);
+        if (myNotes.size() > 0) {
+            for (Note note:myNotes) {
+                if(note.getLocation()!=null)
+                    mapController.setCenter(markers.get(0).getPosition());
+            }
 
         }
 
